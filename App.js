@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 
-const { starWarsData } = require("./services")
+const { starWarsFilms } = require("./services")
 
 const app = express();
 
@@ -13,9 +13,11 @@ app.use(cors());
 app.use('/static', express.static('public'));
 
 app.get('/', async (req, res) => {
-    const data = await starWarsData()
-    console.log(data)
-    res.status(200).json(data)
+    console.log('Processing Data .....')
+    starWarsFilms('https://swapi.dev/api/films/').then((films)=> {
+        console.log(JSON.stringify(films))
+    })
+    res.status(200).send('Processing Data ... please check your Node.js Console in a few minutes')
 })
 
 const PORT = 3000
